@@ -31,3 +31,15 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           yarn install --frozen-lockfile
+
+      - name: Install react-native-cli globally
+        run: npm install -g react-native-cli
+
+      - name: Install detox-cli globally
+        run: npm install -g detox-cli
+
+      - name: Build Detox for iOS Simulator
+        run: detox build --configuration ios.sim.release
+
+      - name: Run Detox tests for iOS Simulator
+        run: detox test --configuration ios.sim.release --cleanup
