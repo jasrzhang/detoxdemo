@@ -15,6 +15,7 @@ jobs:
         with:
           distribution: zulu
           java-version-file: .java-version
+          cache: gradle
 
       - uses: actions/setup-node@v4
         with:
