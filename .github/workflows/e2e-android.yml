@@ -32,14 +32,22 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
       - name: Install react-native-cli globally
         run: npm install -g react-native-cli
 
       - name: Install detox-cli globally
         run: npm install -g detox-cli
 
-      - name: Build Detox for Android Simulator
+      - name: Create Android Emulator
+        run: |
+          echo "y" | sdkmanager "system-images;android-29;default;x86_64"
+          echo "no" | avdmanager create avd --force --name RN_APP --device "pixel" --package "system-images;android-29;default;x86_64" --tag "default" --abi "x86_64"
+
+      - name: Build Detox for Android Emulator
         run: detox build --configuration android.emu.release
 
-      - name: Run Detox tests for Android Simulator
+      - name: Run Detox tests for Android Emulator
         run: detox test --configuration android.emu.release --cleanup
