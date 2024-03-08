@@ -10,8 +10,12 @@
     "test": "jest",
     "test:e2e:ios:build": "detox build --configuration ios.sim.debug ",
     "test:e2e:android:build": "detox build --configuration android.emu.debug ",
+    "test:e2e:ios:build:release": "detox build --configuration ios.sim.release ",
+    "test:e2e:android:build:release": "detox build --configuration android.emu.release ",
     "test:e2e:ios": "detox test --configuration ios.sim.debug",
-    "test:e2e:android": "detox test --configuration android.emu.debug"
+    "test:e2e:android": "detox test --configuration android.emu.debug",
+    "test:e2e:ios:release": "detox test --configuration ios.sim.debug",
+    "test:e2e:android:release": "detox test --configuration android.emu.debug"
   },
   "dependencies": {
     "react": "18.2.0",
