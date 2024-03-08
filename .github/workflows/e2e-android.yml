@@ -38,8 +38,8 @@ jobs:
       - name: Install detox-cli globally
         run: npm install -g detox-cli
 
-      - name: Build Detox for iOS Simulator
-        run: detox build --configuration ios.sim.release
+      - name: Build Detox for Android Simulator
+        run: detox build --configuration android.emu.release
 
-      - name: Run Detox tests for iOS Simulator
-        run: detox test --configuration ios.sim.release --cleanup
+      - name: Run Detox tests for Android Simulator
+        run: detox test --configuration android.emu.release --cleanup
