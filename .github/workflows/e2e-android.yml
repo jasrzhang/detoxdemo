@@ -46,6 +46,9 @@ jobs:
           echo "y" | sdkmanager "system-images;android-29;default;x86_64"
           echo "no" | avdmanager create avd --force --name RN_APP --device "pixel" --package "system-images;android-29;default;x86_64" --tag "default" --abi "x86_64"
 
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./android/gradlew
+
       - name: Build Detox for Android Emulator
         run: detox build --configuration android.emu.release
 
