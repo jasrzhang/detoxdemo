@@ -43,8 +43,8 @@ jobs:
 
       - name: Create Android Emulator
         run: |
-          echo "y" | sdkmanager "system-images;android-29;default;x86_64"
-          echo "no" | avdmanager create avd --force --name RN_APP --device "pixel" --package "system-images;android-29;default;x86_64" --tag "default" --abi "x86_64"
+          echo "y" | sdkmanager "system-images;android-33;google_apis;x86_64"
+          echo "no" | avdmanager create avd --force --name RN_APP --device "pixel" --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --abi "x86_64"
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./android/gradlew
