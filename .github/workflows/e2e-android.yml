@@ -9,6 +9,7 @@ jobs:
   e2e-tests-android:
     name: '[Placeholder] Running e2e android tests'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -45,10 +46,15 @@ jobs:
       - name: Install detox-cli globally
         run: npm install -g detox-cli
 
-      - name: Create Android Emulator
+      - name: Install emulator
         run: |
-          echo "y" | sdkmanager "system-images;android-33;google_apis;arm64-v8a"
-          echo "no" | avdmanager create avd --force --name RN_APP --device "pixel" --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --abi "arm64-v8a"
+          sudo ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --install "emulator"
+
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./android/gradlew
