@@ -49,6 +49,7 @@ jobs:
       - name: Install emulator
         run: |
           sudo ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --install "emulator"
+          echo emulator -list-avds
 
       - name: Enable KVM group perms
         run: |
