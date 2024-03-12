@@ -59,10 +59,13 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
+            ~/.android/sdk*
           key: avd-33
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          MY_APP_MODE: mocked
         with:
           api-level: 33
           target: google_apis
@@ -70,7 +73,6 @@ jobs:
           avd-name: RN_APP
           script: |
             chmod +x ./android/gradlew
-            export MY_APP_MODE=mocked
             # npx react-native build-android --mode=release
             detox build --configuration android.emu.release
             detox test --configuration android.emu.release
