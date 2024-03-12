@@ -12,4 +12,8 @@ describe('Example', () => {
       .toExist()
       .withTimeout(5000);
   });
+  it('should have click button', async () => {
+    await element(by.id('welcome')).tap();
+    await expect(by.text('Hello')).toExist();
+  });
 });

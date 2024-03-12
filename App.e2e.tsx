@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {SafeAreaView, Button, Text, StyleSheet} from 'react-native';
 
-function App() {
-  const [isVisible, setIsVisible] = useState(false);
+const App: React.FC = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handlePress = () => {
     setIsVisible(true);
@@ -14,7 +14,7 @@ function App() {
       {isVisible && <Text style={styles.text}>Hello World</Text>}
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
