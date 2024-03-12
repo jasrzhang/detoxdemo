@@ -56,7 +56,14 @@ jobs:
           target: google_apis
           arch: x86_64
           avd-name: RN_APP
-          script: bash .github/workflows/run-e2e-android-release.sh
+          script: detox test --configuration android.emu.release --headless --record-log all
+
+      - name: Upload artifacts
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: detox-artifacts
+          path: artifacts
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
