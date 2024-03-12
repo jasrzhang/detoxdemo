@@ -13,9 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Linux Dependency
-        run: sudo apt-get update && sudo apt-get install -y libpulse0
-
       - uses: actions/setup-java@v4
         with:
           distribution: zulu
@@ -37,18 +34,11 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v2
-
       - name: Install react-native-cli globally
         run: npm install -g react-native-cli
 
       - name: Install detox-cli globally
         run: npm install -g detox-cli
-
-      - name: Install emulator
-        run: |
-          sudo ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --install "emulator"
 
       - name: Enable KVM group perms
         run: |
