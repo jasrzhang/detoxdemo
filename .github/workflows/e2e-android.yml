@@ -50,17 +50,17 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./android/gradlew
+
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
+          target: default
           arch: x86_64
           avd-name: RN_APP
           script: ./gradlew connectedCheck
-
-      # - name: Make Gradle Wrapper Executable
-      #   run: chmod +x ./android/gradlew
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
