@@ -14,6 +14,6 @@ describe('Example', () => {
   });
   it('should have click button', async () => {
     await element(by.id('ClickBtn')).tap();
-    await expect(by.text('Hello World')).toExist();
+    await expect(element(by.text('Hello World'))).toExist();
   });
 });
