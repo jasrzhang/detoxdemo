@@ -13,7 +13,7 @@ describe('Example', () => {
       .withTimeout(5000);
   });
   it('should have click button', async () => {
-    await element(by.id('welcome')).tap();
-    await expect(by.text('Hello')).toExist();
+    await element(by.id('ClickBtn')).tap();
+    await expect(by.text('Hello World')).toExist();
   });
 });
