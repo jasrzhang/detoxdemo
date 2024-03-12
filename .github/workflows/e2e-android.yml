@@ -71,7 +71,8 @@ jobs:
           script: |
             chmod +x ./android/gradlew
             export MY_APP_MODE=mocked
-            npx react-native build-android --mode=release
+            # npx react-native build-android --mode=release
+            detox build --configuration android.emu.release
             detox test --configuration android.emu.release
 
       - name: Upload artifacts
