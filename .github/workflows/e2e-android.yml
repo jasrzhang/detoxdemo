@@ -57,6 +57,7 @@ jobs:
           arch: x86_64
           avd-name: RN_APP
           script: |
+            chmod +x ./android/gradlew
             detox build --configuration android.emu.release
             detox test --configuration android.emu.release
 
