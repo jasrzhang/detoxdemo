@@ -9,9 +9,6 @@ jobs:
   e2e-tests-android:
     name: '[Placeholder] Running e2e android tests'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        api-level: [33]
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -55,11 +52,11 @@ jobs:
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api-level }}
+          api-level: 33
           target: google_apis
           arch: x86_64
           avd-name: RN_APP
-          script: bash ./.github.workflows/scripts/run-e2e-ios-release.sh
+          script: bash ./.github/workflows/scripts/run-e2e-ios-release.sh
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
