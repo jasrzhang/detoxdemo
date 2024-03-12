@@ -49,9 +49,6 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Make Gradle Wrapper Executable
-        run: chmod +x ./android/gradlew
-
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -60,6 +57,7 @@ jobs:
           arch: x86_64
           avd-name: RN_APP
           script: |
+            chmod +x ./android/gradlew
             detox build --configuration android.emu.release
             ./gradlew connectedCheck
 
