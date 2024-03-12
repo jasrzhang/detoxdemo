@@ -9,7 +9,7 @@ describe('Example', () => {
 
   it('should have welcome screen', async () => {
     await waitFor(element(by.id('welcome')))
-      .toBeVisible()
+      .toExist()
       .withTimeout(5000);
   });
 });

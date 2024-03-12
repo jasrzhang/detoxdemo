@@ -68,10 +68,7 @@ jobs:
           target: google_apis
           arch: x86_64
           avd-name: RN_APP
-          script: |
-            chmod +x ./android/gradlew
-            detox build --configuration android.emu.release
-            detox test --configuration android.emu.release
+          script: bash ./.github/workflows/run-e2e-android-debug.sh
 
       - name: Upload artifacts
         if: failure()
