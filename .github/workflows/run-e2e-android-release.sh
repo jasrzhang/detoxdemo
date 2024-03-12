@@ -4,14 +4,14 @@ chmod +x ./android/gradlew
 
 detox build --configuration android.emu.release
 
-# react-native start --reset-cache
+react-native start --reset-cache
 
-# METRO_BUNDLER_PID=$!
+METRO_BUNDLER_PID=$!
 
 detox test --configuration android.emu.release --headless 
 
-# DETOX_EXIT_CODE=$?
+DETOX_EXIT_CODE=$?
 
-# kill $METRO_BUNDLER_PID
+kill $METRO_BUNDLER_PID
 
-# exit $DETOX_EXIT_CODE
+exit $DETOX_EXIT_CODE
