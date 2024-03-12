@@ -37,11 +37,20 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
-      - name: Install react-native-cli globally
-        run: npm install -g react-native-cli
+      - name: Cache npm global package
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/npm-global
+          key: ${{ runner.os }}-npm-global-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-global-
 
       - name: Install detox-cli globally
-        run: npm install -g detox-cli
+        run: |
+          npm install -g detox-cli --prefix ${{ github.workspace }}/npm-global
+        env:
+          NPM_CONFIG_PREFIX: ${{ github.workspace }}/npm-global
 
       - name: Enable KVM group perms
         run: |
