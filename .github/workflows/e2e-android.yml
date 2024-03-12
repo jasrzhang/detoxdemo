@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Linux Dependency
+        run: sudo apt-get update && sudo apt-get install -y libpulse0
+
       - uses: actions/setup-java@v4
         with:
           distribution: zulu
