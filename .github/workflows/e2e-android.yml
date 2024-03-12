@@ -59,10 +59,7 @@ jobs:
           target: google_apis
           arch: x86_64
           avd-name: RN_APP
-          script: |
-            chmod +x ./android/gradlew
-            detox build --configuration android.emu.release
-            detox test --configuration android.emu.release --cleanup
+          script: bash ./.github.workflows/scripts/run-e2e-ios-release.sh
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
