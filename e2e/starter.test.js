@@ -12,12 +12,12 @@ describe('Example', () => {
   });
 
   it('should show hello screen after tap', async () => {
-    await element(by.id('hello_button')).tap();
-    await expect(element(by.text('Hello!!!'))).toBeVisible();
+    await element(by.id('welcome')).scrollTo('bottom');
+    await expect(element(by.text('Help'))).toBeVisible();
   });
 
   it('should show world screen after tap', async () => {
-    await element(by.id('world_button')).tap();
-    await expect(element(by.text('World!!!'))).toBeVisible();
+    await element(by.id('welcome')).scrollTo('top');
+    await expect(element(by.text('Step One'))).toBeVisible();
   });
 });
