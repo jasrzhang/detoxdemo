@@ -2,9 +2,9 @@
 
 chmod +x ./android/gradlew
 
-react-native start --reset-cache
-
 detox build --configuration android.emu.release
+
+react-native start --reset-cache
 
 METRO_BUNDLER_PID=$!
 
