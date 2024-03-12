@@ -59,7 +59,7 @@ jobs:
           script: |
             chmod +x ./android/gradlew
             detox build --configuration android.emu.release
-            ./gradlew connectedCheck
+            detox test --configuration android.emu.release --cleanup
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
