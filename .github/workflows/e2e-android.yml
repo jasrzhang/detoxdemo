@@ -37,20 +37,9 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
-      - name: Cache npm global package
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ github.workspace }}/npm-global
-          key: ${{ runner.os }}-npm-global-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-global-
-
       - name: Install detox-cli globally
         run: |
-          npm install -g detox-cli --prefix ${{ github.workspace }}/npm-global
-        env:
-          NPM_CONFIG_PREFIX: ${{ github.workspace }}/npm-global
+          npm install detox-cli --global
 
       - name: Enable KVM group perms
         run: |
@@ -68,8 +57,17 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-            ~/.android/sdk*
           key: avd-33
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
