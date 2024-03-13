@@ -49,7 +49,7 @@ jobs:
           brew install applesimutils
 
       - name: Run Detox Build
-        run: detox build --configuration android.emu.release
+        run: detox build --configuration ios.sim.release
 
       - name: Run Detox Test(s)
         env:
