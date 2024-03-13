@@ -57,6 +57,7 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
+            ~/Android/Sdk/*
           key: avd-33
 
       - name: create AVD and generate snapshot for caching
