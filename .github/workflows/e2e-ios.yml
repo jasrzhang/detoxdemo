@@ -9,6 +9,8 @@ jobs:
   e2e-tests-ios:
     name: e2e test ios
     runs-on: macos-14
+    env:
+      MY_APP_MODE: mocked
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,6 +55,4 @@ jobs:
         run: detox build --configuration ios.sim.release
 
       - name: Run Detox Test(s)
-        env:
-          MY_APP_MODE: mocked
-        run: detox test --configuration ios.sim.release --headless
+        run: detox test --configuration ios.sim.release --cleanup
