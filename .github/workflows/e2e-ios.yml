@@ -47,6 +47,7 @@ jobs:
         run: |
           brew tap wix/brew
           brew install applesimutils
+          yarn global add detox-cli
 
       - name: Run Detox Build
         run: detox build --configuration ios.sim.release
