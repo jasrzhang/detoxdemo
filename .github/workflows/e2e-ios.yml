@@ -1,0 +1,57 @@
+name: iOS e2e
+on: workflow_dispatch
+
+defaults:
+  run:
+    shell: 'bash'
+
+jobs:
+  e2e-tests-ios:
+    name: e2e test ios
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Restore node_modules
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: 'node_modules'
+          key: node-modules-${{ runner.os }}-${{ hashFiles('.nvmrc') }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Cache Pod dependencies
+        uses: actions/cache@v1
+        with:
+          path: ios/Pods
+          key: ${{ runner.OS }}-pods-cache-${{ hashFiles('**/ios/Podfile.lock') }}
+
+      - name: Install packages if cache miss
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          yarn install --frozen-lockfile
+
+      - name: Install cache Pod dependencies
+        uses: actions/cache@v1
+        with:
+          path: ios/Pods
+          key: ${{ runner.OS }}-pods-cache-${{ hashFiles('**/ios/Podfile.lock') }}
+
+      - name: Install Pod dependencies
+        run: |
+          npx pod-install
+
+      - name: Install Detox Dependencies
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+
+      - name: Run Detox Build
+        run: detox build --configuration android.emu.release
+
+      - name: Run Detox Test(s)
+        env:
+          MY_APP_MODE: mocked
+        run: detox test --configuration ios.sim.release --headless
