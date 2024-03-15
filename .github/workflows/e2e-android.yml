@@ -1,5 +1,5 @@
 name: Android e2e
-on: workflow_dispatch
+on: push
 
 defaults:
   run:
@@ -56,7 +56,7 @@ jobs:
 
       - name: run detox test
         run: |
-          chmod +x ./android/gradlew
+          chmod +x ./gradlew
           yarn detox build --configuration android.emu.release --headless
 
       # - name: Build Detox for Android Emulator
