@@ -53,7 +53,7 @@ jobs:
 
       - name: Create avd
         run: |
-          avdmanager create avd -n ${{ steps.device.outputs.AVD_NAME }} -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
+          echo "no" | $ANDROID_SDK_ROOT/cmdline-tools/bin/avdmanager create avd -n RN_APP -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
 
       - name: Start emulator
         run: |
