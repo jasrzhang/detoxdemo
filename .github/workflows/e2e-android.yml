@@ -51,6 +51,10 @@ jobs:
         id: device
         run: node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
 
+      - name: Create avd
+        run: |
+          avdmanager create avd -n ${{ steps.device.outputs.AVD_NAME }} -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
+
       - name: Start emulator
         run: |
           echo "no" | ${ANDROID_SDK_ROOT}/emulator/emulator -avd ${{ steps.device.outputs.AVD_NAME }} -no-audio -no-window &
