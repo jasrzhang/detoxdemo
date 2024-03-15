@@ -40,12 +40,7 @@ jobs:
       - name: Install tools
         run: |
           SDKMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager
-          echo "y" | ${SDKMANAGER} "tools"
-
-      - name: Detox build
-        run: |
-          chmod +x ./android/gradlew
-          yarn detox build --configuration android.emu.release
+          echo "y" | ${SDKMANAGER} --install "cmdline-tools;latest" "platform-tools" "platforms;android-33" "system-images;android-33;google_apis;x86_64"
 
       - name: Get device name
         id: device
@@ -60,6 +55,10 @@ jobs:
           echo "no" | ${ANDROID_SDK_ROOT}/emulator/emulator -avd ${{ steps.device.outputs.AVD_NAME }} -no-audio -no-window &
           ${ANDROID_SDK_ROOT}/platform-tools/adb wait-for-device
 
+      - name: Detox build
+        run: |
+          chmod +x ./android/gradlew
+          yarn detox build --configuration android.emu.release
       - name: run detox test
         run: |
           yarn detox test --configuration android.emu.release --headless
