@@ -44,7 +44,7 @@ jobs:
 
       - name: Detox build
         run: |
-          chmod +x ./gradlew
+          chmod +x ./android/gradlew
           yarn detox build --configuration android.emu.release
 
       - name: Get device name
