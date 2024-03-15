@@ -43,7 +43,9 @@ jobs:
           echo "y" | ${SDKMANAGER} "tools"
 
       - name: Detox build
-        run: yarn detox build --configuration android.emu.release
+        run: |
+          chmod +x ./gradlew
+          yarn detox build --configuration android.emu.release
 
       - name: Get device name
         id: device
@@ -56,7 +58,6 @@ jobs:
 
       - name: run detox test
         run: |
-          chmod +x ./gradlew
           yarn detox build --configuration android.emu.release --headless
 
       # - name: Build Detox for Android Emulator
