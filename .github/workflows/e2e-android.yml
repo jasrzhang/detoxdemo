@@ -41,7 +41,7 @@ jobs:
         run: |
           SDKMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager
           echo "y" | ${SDKMANAGER} "tools"
-          echo ${SDKMANAGER} --list
+          ${SDKMANAGER} --list
 
       - name: Get device name
         id: device
@@ -50,7 +50,7 @@ jobs:
       - name: Create avd
         run: |
           AVDMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/avdmanager
-          echo ${AVDMANAGER} -list-avds
+          ${AVDMANAGER} -list-avds
           echo "no" | ${AVDMANAGER} create avd -n ${{steps.device.outputs.AVD_NAME}} -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
 
       - name: Start emulator
