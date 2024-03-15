@@ -40,7 +40,7 @@ jobs:
       - name: Install tools
         run: |
           SDKMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager
-          echo "y" | ${SDKMANAGER} --install "cmdline-tools;latest" "platform-tools" "platforms;android-33" "system-images;android-33;google_apis;x86_64"
+          echo "y" | ${SDKMANAGER} "tools"
 
       - name: Get device name
         id: device
@@ -48,7 +48,7 @@ jobs:
 
       - name: Create avd
         run: |
-          echo "no" | $ANDROID_SDK_ROOT/cmdline-tools/bin/avdmanager create avd -n RN_APP -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
+          echo "no" | ${ANDROID_SDK_ROOT}/cmdline-tools/bin/avdmanager create avd -n RN_APP -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
 
       - name: Start emulator
         run: |
