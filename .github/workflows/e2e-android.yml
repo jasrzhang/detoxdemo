@@ -37,60 +37,26 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
-      - name: Install detox-cli globally
+      - name: Install tools
         run: |
-          npm install detox-cli --global
+          SDKMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager
+          echo "y" | ${SDKMANAGER} "tools"
 
-      - name: Enable KVM group perms
+      - name: Detox build
+        run: yarn detox build --configuration android.emu.release
+
+      - name: Get device name
+        id: device
+        run: node -e "console.log('AVD_NAME=' + require('./.detoxrc').devices.emulator.device.avdName)" >> $GITHUB_OUTPUT
+
+      - name: Start emulator
         run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
+          echo "no" | ${ANDROID_SDK_ROOT}/emulator/emulator -avd ${{ steps.device.outputs.AVD_NAME }} -no-audio -no-window &
+          ${ANDROID_SDK_ROOT}/platform-tools/adb wait-for-device
 
-      - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: AVD cache
-        uses: actions/cache@v4
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-33
-
-      - name: create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 33
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          script: echo "Generated AVD snapshot for caching."
-
-      - name: run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        env:
-          MY_APP_MODE: mocked
-        with:
-          api-level: 33
-          target: google_apis
-          arch: x86_64
-          avd-name: RN_APP
-          disk-size: 6G
-          script: |
-            chmod +x ./android/gradlew
-            avdmanager list device
-            detox build --configuration android.emu.release
-            detox test --configuration android.emu.release
-
-      - name: Upload artifacts
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: detox-artifacts
-          path: artifacts
+      - name: run detox test
+        run: |
+          yarn detox build --configuration android.emu.release --headless
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
