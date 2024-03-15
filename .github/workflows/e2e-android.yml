@@ -62,7 +62,7 @@ jobs:
 
       - name: run detox test
         run: |
-          yarn detox build --configuration android.emu.release --headless
+          yarn detox test --configuration android.emu.release --headless
 
       # - name: Build Detox for Android Emulator
       #   run: detox build --configuration android.emu.release
