@@ -65,6 +65,8 @@ jobs:
           ${ANDROID_SDK_ROOT}/platform-tools/adb wait-for-device
 
       - name: Detox build
+        env:
+          MY_APP_MODE: mocked
         run: |
           chmod +x ./android/gradlew
           yarn detox build --configuration android.emu.release
