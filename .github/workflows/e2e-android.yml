@@ -46,9 +46,9 @@ jobs:
       - name: Install tools
         run: |
           SDKMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager
-          echo "y" | ${SDKMANAGER} "tools"
+          echo "y" | ${SDKMANAGER} "platform-tools" "emulator"
+          echo "y" | ${SDKMANAGER} "platforms;android-33"
           echo "y" | ${SDKMANAGER} "system-images;android-33;google_apis;x86_64"
-          ${SDKMANAGER} --list_installed | grep "system-images;android-33;google_apis;x86_64" || exit 1
 
       - name: Get device name
         id: device
