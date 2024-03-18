@@ -64,7 +64,7 @@ jobs:
           MY_APP_MODE: mocked
         run: |
           chmod +x ./android/gradlew
-          yarn detox build --configuration android.emu.release
+          yarn detox build --configuration android.emu.release --stacktrace
 
       - name: Start emulator
         run: |
