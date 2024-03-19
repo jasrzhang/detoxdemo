@@ -55,7 +55,7 @@ jobs:
           SDKMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager
           echo "y" | ${SDKMANAGER} "platform-tools" "emulator"
           echo "y" | ${SDKMANAGER} "platforms;android-33"
-          echo "y" | ${SDKMANAGER} "system-images;android-33;google_apis;x86_64"
+          echo "y" | ${SDKMANAGER} "system-images;android-33;default;x86_64"
 
       - name: Get device name
         id: device
@@ -64,7 +64,7 @@ jobs:
       - name: Create avd
         run: |
           AVDMANAGER=${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/avdmanager
-          echo "no" | ${AVDMANAGER} create avd -n ${{steps.device.outputs.AVD_NAME}} -k "system-images;android-33;google_apis;x86_64" -d "pixel_6"
+          echo "no" | ${AVDMANAGER} create avd -n ${{steps.device.outputs.AVD_NAME}} -k "system-images;android-33;default;x86_64" -d "pixel_6"
 
       - name: Detox build
         env:
@@ -72,22 +72,6 @@ jobs:
         run: |
           chmod +x ./android/gradlew
           yarn detox build --configuration android.emu.release --loglevel trace
-
-      - name: Start emulator
-        run: |
-          echo "no" | ${ANDROID_SDK_ROOT}/emulator/emulator -avd ${{ steps.device.outputs.AVD_NAME }} -no-audio -no-window &
-          ${ANDROID_SDK_ROOT}/platform-tools/adb wait-for-device
-          ${ANDROID_SDK_ROOT}/platform-tools/adb settings put global window_animation_scale 0
-          ${ANDROID_SDK_ROOT}/platform-tools/adb settings put global transition_animation_scale 0
-          ${ANDROID_SDK_ROOT}/platform-tools/adb settings put global animator_duration_scale 0
-
-      - name: Unlock device
-        run: |
-          ${ANDROID_SDK_ROOT}/platform-tools/adb shell input keyevent 82
-
-      - name: Keep the screen awake
-        run: |
-          ${ANDROID_SDK_ROOT}/platform-tools/adb shell svc power stayon true
 
       - name: run detox test
         run: |
