@@ -80,17 +80,17 @@ jobs:
 
       - name: Disable animations
         run: |
-          adb shell settings put global window_animation_scale 0
-          adb shell settings put global transition_animation_scale 0
-          adb shell settings put global animator_duration_scale 0
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager/adb shell settings put global window_animation_scale 0
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager/adb shell settings put global transition_animation_scale 0
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager/adb shell settings put global animator_duration_scale 0
 
       - name: Unlock device
         run: |
-          adb shell input keyevent 82
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager/adb shell input keyevent 82
 
       - name: Keep the screen awake
         run: |
-          adb shell svc power stayon true
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager/adb shell svc power stayon true
 
       - name: run detox test
         run: |
