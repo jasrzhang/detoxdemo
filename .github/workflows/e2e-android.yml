@@ -73,6 +73,12 @@ jobs:
           chmod +x ./android/gradlew
           yarn detox build --configuration android.emu.release --loglevel trace
 
+      - name: Upload detox APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release
+          path: android/app/build/outputs/apk/release/app-release.apk
+
       - name: run detox test
         run: |
           yarn detox test --configuration android.emu.release --headless
