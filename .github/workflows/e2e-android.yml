@@ -77,12 +77,9 @@ jobs:
         run: |
           echo "no" | ${ANDROID_SDK_ROOT}/emulator/emulator -avd ${{ steps.device.outputs.AVD_NAME }} -no-audio -no-window &
           ${ANDROID_SDK_ROOT}/platform-tools/adb wait-for-device
-
-      - name: Disable animations
-        run: |
-          ${ANDROID_SDK_ROOT}/platform-tools/adb shell settings put global window_animation_scale 0
-          ${ANDROID_SDK_ROOT}/platform-tools/adb shell settings put global transition_animation_scale 0
-          ${ANDROID_SDK_ROOT}/platform-tools/adb shell settings put global animator_duration_scale 0
+          ${ANDROID_SDK_ROOT}/platform-tools/adb settings put global window_animation_scale 0
+          ${ANDROID_SDK_ROOT}/platform-tools/adb settings put global transition_animation_scale 0
+          ${ANDROID_SDK_ROOT}/platform-tools/adb settings put global animator_duration_scale 0
 
       - name: Unlock device
         run: |
